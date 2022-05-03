@@ -1,9 +1,37 @@
-<!DOCTYPE html>
-<html>
-<body>
+<?php 
+extract($_POST);
+if(isset($save))
+{
 
-<h1>HTML Forms</h1>
+	if($e=="" || $p=="")
+	{
+	$err="<font color='red'>fill all the fileds first</font>";	
+	}
+	else
+	{
+$pass=md5($p);	
 
+$sql=mysqli_query($conn,"select * from user where email='$e' and pass='$pass'");
+
+$r=mysqli_num_rows($sql);
+
+if($r==true)
+{
+$_SESSION['user']=$e;
+header('location:user');
+}
+
+else
+{
+
+$err="<font color='red'>Invalid login details</font>";
+
+}
+}
+}
+
+?>
+<div>
 <form1 action="/action_page.php">
   <label for="fname">First names:</label><br>
   <input type="text" id="fname" name="fname" default="Example Like"><br>
@@ -42,12 +70,12 @@
   <label for="Television">Internet</label><br>
   <input type="radio" id="Other" name="interest_source" value="Other">
   <label for="Other">Other</label><br>
+  <input type="submit" value="Submit">
 </form>
-
-
-</body>
-</html>
-
-
-
+<h2>If you have specific feedback, please write to us...</h2>
+            <textarea placeholder="Additional comments" class="w3l_summary" name="comments" required=""></textarea>
+			<br>
+Thank you for the support<br>
+Answers have been sent the the respective admins
+</div>
 
